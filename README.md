@@ -2,8 +2,7 @@
 
 Yêu cầu của bài: xem `requirement.txt` (tìm và xử lý dataset, 2–3 mô hình để so sánh, web dự đoán hoặc gợi ý, báo cáo).
 
-## Đề tài (đã chốt)
-
+## Đề tài
 **Hệ thống dự đoán lựa chọn phương tiện di chuyển của người dân đô thị dựa vào kỹ thuật phân lớp**
 
 - **Hướng nghiên cứu:** từ thông tin về người đi, hộ gia đình và chuyến đi, phân lớp phương tiện thành 5 lớp: xe máy, ô tô, xe đạp/xe điện, đi bộ, công cộng + taxi (chốt 14/11/2026).
@@ -26,12 +25,10 @@ Yêu cầu của bài: xem `requirement.txt` (tìm và xử lý dataset, 2–3 m
 | `demo/` | Web demo Streamlit + script huấn luyện của AI (chỉ để hình dung, không phải sản phẩm cuối) |
 | `ai_notes/` | Script khảo sát UTM-Hanoi của AI (bản sao từ w0) |
 
-Còn ở `w0/` (không chuyển): `ai_notes/` đầy đủ (lịch sử khảo sát các dataset đã loại), `demo_luong/`, `demo_coupon/`, `docs/` (slide, giáo trình).
-Tài liệu các vòng chọn đề tài: https://claude.ai/artifact/KBfmBUh2BDnAqhATrqQrzw (tab "Đề tài đã chốt: Phương tiện di chuyển đô thị").
 
 ## Chạy demo
 
-Từ thư mục gốc `D:\CaoHoc\DWDM`:
+Từ thư mục gốc chứa source
 
 ```powershell
 $env:PYTHONIOENCODING = "utf-8"
