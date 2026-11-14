@@ -1,0 +1,168 @@
+{
+ "9 feature": {
+  "k": 5,
+  "knn_cv": {
+   "3": 0.5518,
+   "5": 0.5533,
+   "11": 0.5259,
+   "21": 0.4915,
+   "31": 0.4741
+  },
+  "kNN": {
+   "cv_f1_mean": 0.5533,
+   "cv_f1_std": 0.0179,
+   "acc": 0.7702,
+   "f1_macro": 0.5734,
+   "f1_class": {
+    "Xe máy": 0.833,
+    "Ô tô": 0.766,
+    "Xe đạp / xe điện": 0.612,
+    "Đi bộ": 0.453,
+    "Công cộng + taxi": 0.203
+   }
+  },
+  "Decision Tree": {
+   "cv_f1_mean": 0.548,
+   "cv_f1_std": 0.0074,
+   "acc": 0.7776,
+   "f1_macro": 0.562,
+   "f1_class": {
+    "Xe máy": 0.844,
+    "Ô tô": 0.754,
+    "Xe đạp / xe điện": 0.615,
+    "Đi bộ": 0.406,
+    "Công cộng + taxi": 0.191
+   }
+  },
+  "Random Forest": {
+   "cv_f1_mean": 0.5559,
+   "cv_f1_std": 0.011,
+   "acc": 0.8103,
+   "f1_macro": 0.5846,
+   "f1_class": {
+    "Xe máy": 0.865,
+    "Ô tô": 0.808,
+    "Xe đạp / xe điện": 0.665,
+    "Đi bộ": 0.42,
+    "Công cộng + taxi": 0.166
+   }
+  }
+ },
+ "12 feature (9 + loại nhà, tình trạng cư trú, sở hữu nhà)": {
+  "k": 3,
+  "knn_cv": {
+   "3": 0.5864,
+   "5": 0.5727,
+   "11": 0.5458,
+   "21": 0.522,
+   "31": 0.5134
+  },
+  "kNN": {
+   "cv_f1_mean": 0.5864,
+   "cv_f1_std": 0.0166,
+   "acc": 0.8012,
+   "f1_macro": 0.6115,
+   "f1_class": {
+    "Xe máy": 0.858,
+    "Ô tô": 0.811,
+    "Xe đạp / xe điện": 0.66,
+    "Đi bộ": 0.44,
+    "Công cộng + taxi": 0.289
+   }
+  },
+  "Decision Tree": {
+   "cv_f1_mean": 0.5669,
+   "cv_f1_std": 0.0097,
+   "acc": 0.801,
+   "f1_macro": 0.5898,
+   "f1_class": {
+    "Xe máy": 0.862,
+    "Ô tô": 0.775,
+    "Xe đạp / xe điện": 0.662,
+    "Đi bộ": 0.443,
+    "Công cộng + taxi": 0.207
+   }
+  },
+  "Random Forest": {
+   "cv_f1_mean": 0.5917,
+   "cv_f1_std": 0.012,
+   "acc": 0.8397,
+   "f1_macro": 0.6198,
+   "f1_class": {
+    "Xe máy": 0.887,
+    "Ô tô": 0.85,
+    "Xe đạp / xe điện": 0.698,
+    "Đi bộ": 0.49,
+    "Công cộng + taxi": 0.174
+   }
+  }
+ },
+ "13 feature (tách xe đạp/xe điện + loại nhà, sở hữu nhà, KC công cộng)": {
+  "k": 3,
+  "knn_cv": {
+   "3": 0.584,
+   "5": 0.5723,
+   "11": 0.5479,
+   "21": 0.5164,
+   "31": 0.4959
+  },
+  "kNN": {
+   "cv_f1_mean": 0.584,
+   "cv_f1_std": 0.015,
+   "acc": 0.8084,
+   "f1_macro": 0.5981,
+   "f1_class": {
+    "Xe máy": 0.864,
+    "Ô tô": 0.836,
+    "Xe đạp / xe điện": 0.646,
+    "Đi bộ": 0.395,
+    "Công cộng + taxi": 0.25
+   }
+  },
+  "Decision Tree": {
+   "cv_f1_mean": 0.5828,
+   "cv_f1_std": 0.0104,
+   "acc": 0.8123,
+   "f1_macro": 0.6141,
+   "f1_class": {
+    "Xe máy": 0.865,
+    "Ô tô": 0.828,
+    "Xe đạp / xe điện": 0.658,
+    "Đi bộ": 0.466,
+    "Công cộng + taxi": 0.254
+   }
+  },
+  "Random Forest": {
+   "cv_f1_mean": 0.6062,
+   "cv_f1_std": 0.0117,
+   "acc": 0.8531,
+   "f1_macro": 0.6207,
+   "f1_class": {
+    "Xe máy": 0.895,
+    "Ô tô": 0.88,
+    "Xe đạp / xe điện": 0.705,
+    "Đi bộ": 0.449,
+    "Công cộng + taxi": 0.174
+   }
+  }
+ },
+ "_meta": {
+  "n": 24296,
+  "n_train": 19436,
+  "n_test": 4860,
+  "counts": {
+   "Xe máy": 13856,
+   "Ô tô": 6636,
+   "Xe đạp / xe điện": 2596,
+   "Công cộng + taxi": 735,
+   "Đi bộ": 473
+  },
+  "test_counts": {
+   "Xe máy": 2772,
+   "Ô tô": 1327,
+   "Xe đạp / xe điện": 519,
+   "Công cộng + taxi": 147,
+   "Đi bộ": 95
+  }
+ }
+}
