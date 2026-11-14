@@ -2,8 +2,7 @@
 
 Yêu cầu của bài: xem `requirement.txt` (tìm và xử lý dataset, 2–3 mô hình để so sánh, web dự đoán hoặc gợi ý, báo cáo).
 
-## Đề tài (đã chốt)
-
+## Đề tài
 **Hệ thống dự đoán lựa chọn phương tiện di chuyển của người dân đô thị dựa vào kỹ thuật phân lớp**
 
 - **Hướng nghiên cứu:** từ thông tin về người đi, hộ gia đình và chuyến đi, phân lớp phương tiện thành 5 lớp: xe máy, ô tô, xe đạp/xe điện, đi bộ, công cộng + taxi (chốt 14/11/2026).
