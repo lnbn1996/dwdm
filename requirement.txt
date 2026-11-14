@@ -1,0 +1,16 @@
+Deadline bài tập cá nhân: hết ngày 
+
+Suy nghĩ chủ đề bài tập nhóm (nên xuất phát từ công việc mình phụ trách hiện tại): 
+Hệ thống gợi ý ….(sách/tài liệu/sản phẩm/….). Xây dựng trang web đơn giản, khi chọn sản phẩm A, gợi ý các sản phẩm B,C,D tương tự?
+Gợi ý chọn trường THPT? (dựa trên kết quả học các THCS)
+Chẩn đoán bệnh dựa trên dữ liệu lâm sàng?
+Dự báo giá cổ phiếu/vàng? 
+Dự đoán kết quả học của học sinh?
+…
+
+Các công việc trong bài tập nhóm:
+Tìm và xử lý tập dữ liệu về lĩnh vực nào đó
+Huấn luyện 2-3 mô hình để so sánh kết quả, lựa chọn mô hình tốt nhất
+Xây dựng web đơn giản để tích hợp mô hình vào (giao diện cho người dùng chọn/nhập thuộc tính đầu vào, bấm nút dự đoán để output kết quả. 
+Hoặc có thể xây dựng hệ thống gợi ý, khi người dùng đánh giá sản phẩm, hệ thống gợi ý danh sách các sản phẩm tương tự.
+Viết báo cáo
