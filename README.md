@@ -25,12 +25,10 @@ Yêu cầu của bài: xem `requirement.txt` (tìm và xử lý dataset, 2–3 m
 | `demo/` | Web demo Streamlit + script huấn luyện của AI (chỉ để hình dung, không phải sản phẩm cuối) |
 | `ai_notes/` | Script khảo sát UTM-Hanoi của AI (bản sao từ w0) |
 
-Còn ở `w0/` (không chuyển): `ai_notes/` đầy đủ (lịch sử khảo sát các dataset đã loại), `demo_luong/`, `demo_coupon/`, `docs/` (slide, giáo trình).
-Tài liệu các vòng chọn đề tài: https://claude.ai/artifact/KBfmBUh2BDnAqhATrqQrzw (tab "Đề tài đã chốt: Phương tiện di chuyển đô thị").
 
 ## Chạy demo
 
-Từ thư mục gốc `D:\CaoHoc\DWDM`:
+Từ thư mục gốc chứa source
 
 ```powershell
 $env:PYTHONIOENCODING = "utf-8"
