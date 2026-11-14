@@ -1,7 +1,32 @@
 # AI-LOG – nhật ký làm việc của AI (w1)
 
 > Mọi thứ trong file này là **ghi chú của AI**, không phải kết quả chính thức của nhóm.
-> Cập nhật cuối: 14/11/2026.
+> Cập nhật cuối: 15/11/2026 (01:15). **Session mới: đọc mục 0 trước**, rồi mục 2 (vướng) và mục 4 (việc tiếp theo).
+
+## 0. Hiện trạng (15/11/2026) – đọc trước khi tiếp tục
+
+**Ưu tiên hiện tại: bài nhóm.** Bài cá nhân (`baitapcanhan/`) tạm gác; người dùng sẽ tự yêu cầu khi cần (còn thiếu lời giải Bài 6, 7, 8, 11, 12, 13, 19 trong `giaibaitap.docx`).
+
+**Đề tài:** "Hệ thống dự đoán lựa chọn phương tiện di chuyển của người dân đô thị dựa vào kỹ thuật phân lớp". Dữ liệu UTM-Hanoi 2021 (bản gốc OSF, `demo/data/hn_survey_26k.csv`).
+
+**Cấu hình đã chốt (14/11):** 5 nhãn (xe máy / ô tô / xe đạp + xe điện / đi bộ / công cộng + taxi); 12 thuộc tính (9 cũ + loại nhà, tình trạng cư trú, sở hữu nhà); 3 giải thuật kNN (`distance`, k=5), Decision Tree (max_depth 10, min_samples_leaf 20), Random Forest (200 cây, min_samples_leaf 5). Kết quả test (4.860 chuyến): RF 0,838 / 0,612; kNN 0,804 / 0,594; DT 0,801 / 0,590 (accuracy / macro-F1). RF là mô hình mặc định.
+
+**Đã xong**
+
+| Hạng mục | Trạng thái | Nơi lưu |
+| --- | --- | --- |
+| Web demo (Streamlit) | **Demo chính thức** để báo cáo; người dùng đã chạy được trên máy và duyệt giao diện qua nhiều vòng | `demo/app.py`, `demo/common.py`, `demo/train.py`, `demo/artifacts/`, theme `D:\CaoHoc\DWDM\.streamlit\config.toml` |
+| Thực nghiệm chọn thuộc tính (9/12/13) và chọn k | Xong (Ghi chú của AI) | `ai_notes/so_sanh_5nhan.py` + `_ketqua.json`, `ai_notes/chon_k.py` + `_ketqua.json` |
+| Báo cáo Word | **Bản viết đầy đủ** 28 trang, chờ người dùng đọc lại và bổ sung ảnh | `baocao/baocao-dwdm.docx`, nguồn dựng `baocao/_nguon/` |
+| Bản nháp mục "Độ đo" | Đã đưa vào báo cáo (mục 1.4) | `bao_cao_nhap.md` |
+
+**Giao diện web hiện tại (người dùng đã duyệt, giữ nguyên trừ khi được yêu cầu):**
+- Thanh tiêu đề cố định nền teal; thanh tab kiểu tab trình duyệt (tab đang chọn nền trắng, nối liền khung nội dung, không viền/vạch trên, không bo góc thanh); dính dưới tiêu đề khi cuộn. Selector CSS dùng `[role="tab"]`, `aria-selected` (các `data-baseweb` không ăn ở Streamlit 1.66 của người dùng).
+- 6 tab, không đánh số, thứ tự: Dự đoán phương tiện · So sánh mô hình · Dữ liệu gốc · Làm sạch & chọn cột · Khám phá dữ liệu · Phương tiện thay thế khi cấm xe máy.
+- Tab Dự đoán: form 12 ô + chọn mô hình, nút **Dự đoán** và **Xóa** (về mặc định, ẩn kết quả); kết quả giữ trong `session_state` khi đổi tab.
+- Footer: dòng đậm "Kho dữ liệu và khai phá dữ liệu (CTH603) · Lớp CTHT33 · Nhóm 2", "Thành viên:" + danh sách (Lê Nguyễn Bảo Ngọc, Trần Thị Thanh Hằng); đường kẻ dọc ở giữa (không chạm mép); nguồn dữ liệu bên phải 2 hàng; không bo góc; luôn nằm đáy màn hình khi nội dung ngắn (không sinh thanh cuộn).
+- Chữ chú thích xám đậm `#4A5A60`; tiêu đề mục (subheader) 1,4rem; bảng tự cao vừa số dòng (`fit_height()`); `is_dark()` luôn trả False (theme cố định sáng).
+- Sửa `common.py` thì phải **tắt và chạy lại** `streamlit run` (Streamlit không nạp lại module import); sửa `app.py` chỉ cần F5.
 
 ## 1. Đã làm được
 
@@ -21,6 +46,7 @@
 | 14/11 | **Cập nhật demo theo cấu hình người dùng chốt:** 5 nhãn, 12 feature, kNN `weights="distance"` k=5 (Decision Tree và Random Forest dùng chung bộ 12 feature, tham số như cũ). Sửa `common.py` (`LABELS`, `GROUP`, `FEATURES`, `KNN_K`, `KNN_WEIGHTS`, nhãn tiếng Việt cho 3 cột nhà ở), `train.py` (kNN cố định k=5, vẫn đo CV vài k để ghi báo cáo), `app.py` (form 12 ô, 5 màu, ma trận nhầm lẫn 5×5). Chạy lại `train.py` trong sandbox của AI và ghi `artifacts/` về máy. **Chưa mở được app bằng `streamlit`/`AppTest`** (sandbox không có streamlit); mới kiểm tra bằng cách nạp mô hình, dự đoán thử với giá trị mặc định của form và đối chiếu khóa trong `report.json` với những gì `app.py` đọc. |
 | 14/11 | **Web thành demo chính thức** theo yêu cầu người dùng: bỏ dòng "Demo của AI"; bố cục single page (6 tab cũ thành 6 mục nối tiếp); header cố định chứa tên đề tài và menu 6 mục (bấm để cuộn tới mục); footer ghi môn CTH603, lớp CTHT33, Nhóm 2, thành viên và nguồn dữ liệu; theme xanh lục đậm (teal, `#0F766E`) trong `.streamlit/config.toml` ở thư mục gốc. Nội dung các mục giữ nguyên. Đã chạy thử toàn bộ `app.py` với streamlit giả lập (không lỗi Python); **chưa xem giao diện thật** vì sandbox của AI không có streamlit. Người dùng muốn giữ đủ 6 mục và sẽ trao đổi thêm các chức năng. Bản nháp báo cáo (mục độ đo, vì sao không dùng RMSE/MAE) ở `bao_cao_nhap.md`. |
 | 14/11 | **Chỉnh giao diện lần 2** theo ảnh chụp và yêu cầu của người dùng: bỏ single page, quay lại dạng tab; thanh tiêu đề tối cố định, thanh tab nền sáng dính bên dưới, tab đang chọn nền teal chữ trắng; bỏ đánh số; đổi tên tab 6 thành "Phương tiện thay thế khi cấm xe máy"; thứ tự tab mới: Dự đoán phương tiện · So sánh mô hình · Dữ liệu gốc · Làm sạch & chọn cột · Khám phá dữ liệu · Phương tiện thay thế khi cấm xe máy; footer gọn (dòng in đậm môn · lớp · nhóm, danh sách thành viên, nguồn dữ liệu bên phải). Chạy thử bằng streamlit giả lập không lỗi; chưa xem giao diện thật. |
+| 15/11 | **Viết báo cáo `baocao/baocao-dwdm.docx`** (28 trang) theo khung của `baocao-sample.docx`: 2 bìa (tên đề tài mới), mục lục có số trang và liên kết, danh sách 13 bảng / 6 hình, từ viết tắt, Mở đầu, Chương 1–4, Kết luận, 5 tài liệu tham khảo. Số liệu lấy từ `demo/artifacts/report.json` (lần chạy 14/11) và `ai_notes/*.json`; 5 hình vẽ bằng matplotlib, Hình 4.2 là ảnh chụp tab Dự đoán của người dùng; Hình 4.3, 4.4 là khung chờ chèn ảnh chụp. Nguồn dựng ở `baocao/_nguon/`. Người dùng đã xóa dòng ghi chú đầu mục lục trước khi AI ghi bản này (bản mới không còn dòng đó). |
 
 **Số đo của demo (tập test 4.860 chuyến, 14/11, 5 nhãn, 12 feature):**
 
@@ -34,15 +60,17 @@
 Số đo cũ ngày 13/11 (4 nhãn, 9 feature): Random Forest 0,805 / 0,659; kNN k=3 0,772 / 0,653; Decision Tree 0,778 / 0,630. Không so trực tiếp được vì khác số nhãn (macro-F1 trung bình trên số lớp khác nhau).
 Ghi chú: Random Forest ở `ai_notes/so_sanh_5nhan.py` cho 0,840 / 0,620 với cùng cấu hình; chênh 0,008 là do thứ tự cột sau mã hóa khác nhau, cho thấy mức nhiễu giữa các lần chạy. Với kNN, `uniform` k=5 trên tập test cho 0,604, hơn `distance` k=5 (0,594); chênh lệch nằm trong nhiễu, còn CV lặp trên train ủng hộ `distance` (xem dòng "Chọn k" ở trên).
 
-## 2. Đang vướng
+## 2. Đang vướng / cần lưu ý
 
-- **k của kNN:** đã chốt `distance`, k=5 (14/11). Chênh lệch giữa k=4–8 của `distance` rất nhỏ (dưới 0,005, nhỏ hơn độ lệch chuẩn ghép cặp), nên k=5 là lựa chọn có căn cứ chứ không phải điểm tối ưu tuyệt đối.
-- **Macro-F1 (~0,59–0,61) thấp hơn nhiều so với accuracy (~0,80–0,84):** hai lớp nhỏ nhất vẫn khó: "Công cộng + taxi" F1 chỉ khoảng 0,17–0,29 và "Đi bộ" khoảng 0,39–0,49 (số đo ở `ai_notes/so_sanh_5nhan_ketqua.json`). Chưa thử xử lý mất cân bằng (`class_weight`, resampling) trên bộ 5 nhãn.
-- **Nhãn tiếng Việt của 3 cột nhà ở là diễn giải tạm** (`HOUSE_TYPE`, `STATUS`, `TENURE` trong `common.py`), suy từ tên giá trị như `private_new`, `old_building`, `morgate`; cần đối chiếu với từ điển dữ liệu của UTM-Hanoi. `so_huu_nha` đứng thứ 3 về độ quan trọng trong Random Forest (0,112), nên đáng kiểm tra ý nghĩa cột `own` trước khi đưa vào báo cáo.
-- **Demo chưa xem trên trình duyệt thật**, và bản cập nhật 14/11 chưa chạy qua `AppTest`. Cần chạy `train.py` rồi mở `streamlit` trên máy người dùng để kiểm tra. Màu thứ 5 (tím) trong biểu đồ chưa kiểm tra mù màu.
-- **Bản gốc `hn_survey_26k.csv`** để nguyên trong `demo/data/` (8 MB); người dùng sẽ yêu cầu khi nào cần chuyển (chốt 14/11).
-
-- **Đính chính (13/11):** bản gốc OSF có **8 giá trị** ở cột nhãn `vehic` (moto, car, ebike, bike, walk, bus, taxi, tram), không phải 7 như bản Kaggle và như một số ghi chú cũ. Từ 14/11 gộp thành 5 nhãn (trước đó 4 nhãn). Xem mục 6 (số liệu 13/11, bản 4 nhãn).
+- **Báo cáo còn thiếu (người dùng làm):** chèn ảnh chụp Hình 4.3 (tab So sánh mô hình) và Hình 4.4 (tab Khám phá dữ liệu), hiện là khung viền đứt; Hình 4.2 là ảnh chụp tab Dự đoán trước khi có nút Xóa, nên chụp lại; điền tên giảng viên hướng dẫn trên bìa; đọc lại văn phong; cập nhật mục lục trong Word (chuột phải → Update Field → Update entire table) vì số trang đo bằng LibreOffice.
+- **Hai lớp nhỏ dự đoán kém:** "Công cộng + taxi" F1 ~0,20–0,23, "Đi bộ" ~0,40–0,44 (bản 14/11). Chưa thử xử lý mất cân bằng (resampling, ngưỡng) trên bộ 5 nhãn; `class_weight="balanced"` chỉ thử trên bản 4 nhãn cũ (không cải thiện macro-F1).
+- **Nhãn tiếng Việt của 3 cột nhà ở là diễn giải tạm** (`HOUSE_TYPE`, `STATUS`, `TENURE` trong `common.py`), cần đối chiếu từ điển dữ liệu UTM-Hanoi. `so_huu_nha` đứng thứ 3 về độ quan trọng (0,112). Báo cáo đã ghi chú điều này ở mục 2.6.
+- **Tham số Decision Tree / Random Forest chưa tinh chỉnh**; chênh lệch giữa 3 mô hình không lớn so với độ dao động giữa các lần chia (RF 0,612 ở demo so với 0,620 ở `ai_notes`, do thứ tự cột sau mã hóa).
+- **kNN có thể hòa phiếu** (ví dụ kịch bản 2 trong báo cáo: Xe đạp 40% = Đi bộ 40%); web hiện lấy lớp xuất hiện trước. Chưa xử lý riêng.
+- **Màu thứ 5 (tím `#7a5cc7`) của biểu đồ chưa kiểm tra mù màu.**
+- **Môi trường của AI** không có streamlit, altair và mạng: AI chỉ kiểm tra `app.py` bằng bản giả lập; giao diện thật phải nhờ người dùng chạy và gửi ảnh chụp. Trình duyệt tích hợp không mở được `localhost:8501` (thử 14/11).
+- **Bản gốc `hn_survey_26k.csv`** để nguyên trong `demo/data/`; người dùng sẽ yêu cầu khi nào cần chuyển.
+- **Đính chính (13/11):** bản gốc OSF có **8 giá trị** ở cột nhãn `vehic` (7 là bản Kaggle). Một số ghi chú cũ trong `w0/ai_notes/` vẫn ghi "7 lớp", chưa sửa.
 
 ## 3. Quyết định của người dùng
 
@@ -58,13 +86,14 @@ Ghi chú: Random Forest ở `ai_notes/so_sanh_5nhan.py` cho 0,840 / 0,620 với 
 - **kNN: `weights="distance"`, k=5.**
 - Phần trình bày quá trình tìm hiểu từng giải thuật sẽ kèm số đo thử với 9 / 12 / 13 feature và nhiều k (3, 5, 11…): người dùng sẽ yêu cầu thêm sau. Số đo hiện có nằm ở `ai_notes/so_sanh_5nhan_ketqua.json` và `ai_notes/chon_k_ketqua.json`.
 
-## 4. Công việc tiếp theo (đề xuất; không bắt buộc theo thứ tự, người dùng quyết định làm gì trước)
+## 4. Công việc tiếp theo (người dùng quyết định làm gì trước)
 
-1. **Khai báo dữ liệu:** nguồn, giấy phép, từ điển dữ liệu 56 cột (ý nghĩa, kiểu, giá trị).
-2. **EDA** trên dữ liệu gốc: phân bố nhãn, giá trị thiếu, trùng lặp, ngoại lai khoảng cách.
-3. **Làm sạch** (bỏ trùng, ngoại lai) và **tiền xử lý** (mã hóa, chuẩn hóa), nhóm tự làm và hiểu từng bước.
-4. **Mô hình:** kNN, Decision Tree, Random Forest; chọn tham số bằng CV; đánh giá (accuracy, precision, recall, F1, ma trận nhầm lẫn).
-5. **Web** (form nhập → dự đoán) và **báo cáo**.
+1. **Báo cáo:** người dùng đọc lại `baocao/baocao-dwdm.docx`, chèn ảnh chụp, nêu chỗ cần sửa; AI sửa đúng đoạn được yêu cầu (không dựng lại cả file, xem mục 8). Người dùng đã nói sẽ yêu cầu thêm phần trình bày quá trình tìm hiểu từng giải thuật với số đo 9/12/13 thuộc tính và nhiều k (3, 5, 11…): hiện báo cáo đã có Bảng 3.2 và Hình 3.1, có thể cần mở rộng.
+2. **Web:** người dùng đang duyệt và sẽ trao đổi thêm các chức năng cần thiết cho "hệ thống" (không muốn web quá đơn giản). Mỗi thay đổi giao diện ảnh hưởng mục 4.3 của báo cáo.
+3. **Cải thiện mô hình (tùy chọn):** xử lý mất cân bằng cho 2 lớp nhỏ; tinh chỉnh tham số DT/RF bằng CV; nếu đổi cấu hình thì chạy lại `train.py` và cập nhật báo cáo theo bảng ở mục 8.
+4. **Đối chiếu từ điển dữ liệu** UTM-Hanoi cho các cột `type`, `status`, `own`, `dist_to_pub`.
+5. **Slide thuyết trình** (chưa được yêu cầu): có thể cần khi nộp / báo cáo.
+6. **Bài cá nhân:** chờ người dùng yêu cầu.
 
 ## 5. Chọn k cho kNN (đã làm ngày 14/11 bằng `ai_notes/chon_k.py`; danh sách dưới đây là kế hoạch gốc)
 
@@ -117,3 +146,23 @@ Mục tiêu: ra được một giá trị k (và cấu hình đi kèm) có căn 
 **Để tiếp tục:** người dùng sẽ tự làm mục 5 (chọn k). Phương án đang chờ người dùng quyết (mục 3): giữ 4 nhãn, hay tách đi bộ ra khỏi "Khác", hay bỏ "Khác" (3 nhãn); giữ 9 feature hay thêm/bớt. Tài liệu w1 trên claude.ai (https://claude.ai/artifact/QMko3XdiCM5MKHniSdiyPS) **chưa** cập nhật theo các nội dung từ mục 5 đến 7 này và vẫn còn ô tick "Cần nhóm xác nhận" cũ.
 
 > Quy ước: việc AI tự đo hoặc tự đề xuất luôn gắn nhãn "Ghi chú của AI" và tách khỏi phần chính thức của nhóm.
+
+## 8. Báo cáo `baocao/baocao-dwdm.docx`: cập nhật khi source thay đổi
+
+Báo cáo chứa số liệu **gõ cứng** của lần chạy 14/11/2026 (5 nhãn, 12 thuộc tính, kNN `distance` k=5; Random Forest accuracy 0,838 / macro-F1 0,612). Mỗi khi source hoặc kết quả thay đổi, phải cập nhật các mục tương ứng trong báo cáo, rồi cập nhật mục lục (chuột phải → Update Field → Update entire table) và danh sách bảng / hình.
+
+- Người dùng có thể đã sửa báo cáo bằng Word: **không dựng lại toàn bộ file** bằng `_nguon/make2.py` (sẽ ghi đè chỉnh sửa). Sửa trực tiếp các đoạn bị ảnh hưởng trong file Word (giải nén, sửa `word/document.xml`, sao lưu trước), hoặc báo cho người dùng danh sách chỗ cần sửa.
+- Sau khi sửa, ghi vào mục 1 của file này: đã cập nhật những mục nào của báo cáo và theo số liệu lần chạy nào.
+- Còn chờ người dùng: chèn ảnh chụp cho Hình 4.3 (tab So sánh mô hình) và Hình 4.4 (tab Khám phá dữ liệu); kiểm tra tên giảng viên hướng dẫn trên bìa (đang để trống như mẫu).
+
+| Khi thay đổi | Cập nhật trong báo cáo |
+| --- | --- |
+| Dữ liệu, `clean()` trong `common.py` (bước làm sạch, ngưỡng quãng đường) | Mục 2.3, 2.4 (Bảng 2.2), 2.5 (Bảng 2.3 số mẫu mỗi lớp), Hình 2.1, 2.2, mục 2.7 (số dòng train/test), Kết luận |
+| Nhãn (`LABELS`, `GROUP`) | Mục 2.5 (Bảng 2.3), toàn bộ Chương 3 (Bảng 3.3–3.5), mục 4.3.1, Bảng 4.2, Mở đầu mục 3 |
+| Thuộc tính (`FEATURES`, giá trị trong `OPTIONS`) | Mục 2.6 (Bảng 2.5), 2.7, mục 3.5, Hình 3.2, mục 4.3.1, Bảng 4.2 |
+| Tham số mô hình (`KNN_K`, `KNN_WEIGHTS`, tham số cây/rừng trong `train.py`) | Bảng 3.1, mục 3.2–3.4, Hình 3.1 (nếu đổi lưới k), Bảng 3.3–3.6 |
+| Chạy lại `train.py` (số liệu trong `artifacts/report.json` đổi) | Bảng 3.3, 3.4, 3.5, 3.6, Hình 3.2, mục 3.6–3.7, Bảng 4.2 (chạy lại các kịch bản), Kết luận mục 1 |
+| `ai_notes/so_sanh_5nhan.py`, `chon_k.py` chạy lại | Bảng 3.2, Hình 3.1, mục 3.2, 3.5 |
+| Giao diện `app.py` (tab, nút, bố cục) | Mục 4.1, 4.3 (Hình 4.2–4.4: chụp lại ảnh), 4.4 |
+| Thư viện / phiên bản (`requirements.txt`, `.venv`) | Mục 3.1, Bảng 4.1 |
+| Thông tin nhóm (`COURSE`, `CLASS_NAME`, `GROUP_NAME`, `MEMBERS` trong `common.py`) | Hai trang bìa |

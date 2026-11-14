@@ -167,14 +167,32 @@ with tab["Dự đoán phương tiện"]:
                 "quang_duong": "3–5 km", "so_chuyen_tuan": "4–7 chuyến", "so_o_to": "1", "so_xe_may": "2",
                 "so_xe_dap": "0", "loai_nha": "Nhà riêng", "tinh_trang_cu_tru": "Thường trú",
                 "so_huu_nha": "Chủ sở hữu"}
+    # Giá trị của form nằm trong session_state (khóa "f_<cột>", "f_model") để nút Xóa đưa được về mặc định
+    for col in FEATURES:
+        st.session_state.setdefault(f"f_{col}", defaults[col])
+    st.session_state.setdefault("f_model", best)
+
+    def reset_form():
+        """Nút Xóa: đưa mọi ô về giá trị mặc định và ẩn kết quả dự đoán."""
+        for c in FEATURES:
+            st.session_state[f"f_{c}"] = defaults[c]
+        st.session_state["f_model"] = best
+        st.session_state.pop("ket_qua_du_doan", None)
+
     with st.form("predict"):
         row = {}
         for container, group in zip(st.columns(3), [FEATURES[0:4], FEATURES[4:8], FEATURES[8:12]]):
             for col in group:
-                row[col] = container.selectbox(COL_VI[col], OPTIONS[col], index=OPTIONS[col].index(defaults[col]))
-        model_name = st.selectbox("Mô hình", list(models), index=list(models).index(best))
-        go = st.form_submit_button("Dự đoán", type="primary")
+                row[col] = container.selectbox(COL_VI[col], OPTIONS[col], key=f"f_{col}")
+        model_name = st.selectbox("Mô hình", list(models), key="f_model")
+        b1, b2, _ = st.columns([1, 1, 10], gap="small")
+        go = b1.form_submit_button("Dự đoán", type="primary", width="stretch")
+        b2.form_submit_button("Xóa", type="secondary", width="stretch", on_click=reset_form)
     if go:
+        st.session_state["ket_qua_du_doan"] = (model_name, row)
+    # Kết quả được giữ lại khi chuyển tab hay thao tác ở tab khác, cho tới khi bấm Dự đoán lần nữa hoặc bấm Xóa
+    if "ket_qua_du_doan" in st.session_state:
+        model_name, row = st.session_state["ket_qua_du_doan"]
         model = models[model_name]
         proba = model.predict_proba(pd.DataFrame([row]))[0]
         probs = pd.DataFrame({"Phương tiện": model.classes_, "Xác suất": proba})
