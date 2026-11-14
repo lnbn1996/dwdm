@@ -1,7 +1,4 @@
-# W1 – Thư mục làm việc chính sau khi chốt đề tài
-
-> **Từ khi chốt đề tài (01/11/2026) và chốt bộ giải thuật (13/11/2026), thư mục làm việc chính là `assignment/w1/`.**
-> `w0/` chỉ còn là lịch sử chọn đề tài (đề xuất, demo cũ, tài liệu khóa học). Không làm việc mới trong `w0/`.
+# Thông tin chung
 
 Yêu cầu của bài: xem `requirement.txt` (tìm và xử lý dataset, 2–3 mô hình để so sánh, web dự đoán hoặc gợi ý, báo cáo).
 
